@@ -22,6 +22,28 @@
         h1 {
             color: #ff7f50;
         }
+        input[type="text"], input[type="password"], select {
+            width: 80%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #ff7f50;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .login-box {
+            background-color: #444;
+            color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
         .footer {
             margin-top: 20px;
             font-size: 0.9em;
@@ -34,11 +56,80 @@
         <h1>Welcome to SSIS App</h1>
         <p>Made by Coders@Tech</p>
 
+        <!-- Login Box for Students and Teachers -->
+        <div class="login-box">
+            <h2>Sign Up / Login</h2>
+            <p>Note: Your username should be your name</p>
+            <form id="loginForm">
+                <input type="text" id="username" placeholder="Enter your name (username)" required><br>
+                <input type="password" id="password" placeholder="Create a password" required><br>
+                <select id="role">
+                    <option value="student">Student</option>
+                    <option value="teacher">Teacher</option>
+                </select><br>
+                <button type="button" onclick="login()">Submit</button>
+            </form>
+        </div>
+
+        <!-- Student View -->
+        <div id="studentView" style="display:none;">
+            <h2>Welcome, <span id="studentName"></span></h2>
+            <p>Your Default Points: 100 (Monthly Points: +100)</p>
+            <button onclick="logout()">Logout</button>
+        </div>
+
+        <!-- Teacher View -->
+        <div id="teacherView" style="display:none;">
+            <h2>Welcome, Teacher <span id="teacherName"></span></h2>
+            <p>You can manage student points.</p>
+            <form>
+                <input type="text" id="studentUsername" placeholder="Student Username" required><br>
+                <select id="pointAction">
+                    <option value="add">Add Points</option>
+                    <option value="deduct">Deduct Points</option>
+                </select><br>
+                <button type="button" onclick="updatePoints()">Update Points</button>
+            </form>
+            <button onclick="logout()">Logout</button>
+        </div>
+
         <div class="footer">
             <p>Any feedback? Kindly email us at:</p>
             <p><a href="mailto:coderstech42@gmail.com">coderstech42@gmail.com</a></p>
         </div>
     </div>
 
+    <script>
+        function login() {
+            const username = document.getElementById("username").value;
+            const role = document.getElementById("role").value;
+
+            if (role === "student") {
+                document.getElementById("studentName").textContent = username;
+                document.getElementById("studentView").style.display = "block";
+                document.getElementById("loginForm").style.display = "none";
+            } else if (role === "teacher") {
+                document.getElementById("teacherName").textContent = username;
+                document.getElementById("teacherView").style.display = "block";
+                document.getElementById("loginForm").style.display = "none";
+            }
+        }
+
+        function logout() {
+            document.getElementById("loginForm").style.display = "block";
+            document.getElementById("studentView").style.display = "none";
+            document.getElementById("teacherView").style.display = "none";
+        }
+
+        function updatePoints() {
+            const studentUsername = document.getElementById("studentUsername").value;
+            const action = document.getElementById("pointAction").value;
+
+            alert(action === "add" ? `Added points to ${studentUsername}` : `Deducted points from ${studentUsername}`);
+        }
+    </script>
+
 </body>
 </html>
+
+     
